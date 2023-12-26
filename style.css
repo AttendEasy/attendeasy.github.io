@@ -1,0 +1,309 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #333;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
+.logo a {
+  font-weight: bold;
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  color: #f2f2f2;
+}
+
+.hero {
+  margin-top: 104.792px; /* add top margin to the hero section */
+  background: #343a40;
+  color: #fff;
+  padding: 4rem;
+  text-align: center;
+}
+
+/* Adjust the h1 and p elements accordingly */
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+
+.hero button {
+  background: #fff;
+  color: #343a40;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.faq {
+  background: #f2f2f2;
+  padding: 4rem;
+}
+
+.faq h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.faq .question {
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.faq .answer {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.footer {
+  background-color: #454545;
+  color: #ffffff;
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+/* Styling for Features section */
+.features {
+  background-color: #f6f6f6;
+  padding: 50px 0;
+}
+
+.features h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.features .feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.features .feature img {
+  width: 150px;
+  margin-right: 30px;
+}
+
+.features .feature h3 {
+  margin-bottom: 10px;
+}
+
+.features .feature p {
+  font-size: 18px;
+}
+/* Styling for Trusted section */
+.trusted {
+  background-color: #454545;
+  padding: 50px 0;
+}
+
+.trusted h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color:white;
+}
+
+.trusted .feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.trusted .feature img {
+  width: 150px;
+  margin-right: 30px;
+}
+
+.trusted .feature h3 {
+  margin-bottom: 10px;
+}
+
+.trusted .feature p {
+  font-size: 18px;
+}
+
+/* Styling for Pricing section */
+.pricing {
+  background-color: #ffffff;
+  padding: 50px 0;
+}
+
+.pricing h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pricing .plan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.pricing .plan img {
+  width: 100%;
+  max-width: 300px;
+  margin-right: 30px;
+}
+
+.pricing .plan-details {
+  text-align: center;
+}
+
+.pricing .plan-details h3 {
+  margin-bottom: 10px;
+}
+
+.pricing .plan-details p {
+  font-size: 18px;
+}
+
+.pricing .btn {
+  margin-top: 30px;
+}
+
+/* Styling for Contact section */
+.contact {
+  background-color: #f6f6f6;
+  padding: 50px 0;
+}
+
+.contact h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.contact form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact input,
+.contact textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact textarea {
+  height: 200px;
+}
+
+.contact .btn {
+  display: block;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.pricing-card.blue {
+  background-color: #2D9CDB;
+  color: #fff;
+}
+
+.pricing-card.orange {
+  background-color: #FF9800;
+  color: #fff;
+}
+
+.pricing-card.green {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.pricing-card h3 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.pricing-card p.price {
+  font-size: 36px;
+  margin-bottom: 0;
+}
+
+.pricing-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pricing-card li {
+  padding: 5px 0;
+}
+
+.pricing-card a.btn {
+  background-color: #0066CC;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pricing-card .btn {
+  margin-top: auto;
+}

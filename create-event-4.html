@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Event - Step 4</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>button[disabled]{cursor:not-allowed;}</style>
+  <script src="CookieService.js"></script>
+</head>
+
+<body style="width: 100%; height: 100%; background: white; position: absolute; z-index: 5; padding: 50px; top: 0px; left: 0px;">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&amp;display=swap" rel="stylesheet">
+  <h1 style="font-family: 'Merriweather', serif;">Do you know the date/time of the event?</h1>
+  <h6 style="font-family: 'Merriweather', serif;color:gray;width:600px;">If you don't, you can just skip this and press Next. It can be changed anytime.</h6>
+  <br><br><br><br><br>
+
+  <input style="font-size: 25pt;" type="datetime-local"><br>
+  
+  <button id="nextBtn" style="font-size:2em;" class="btn btn-primary mt-4" type="button">Next</button>
+  <br><button onclick="if(confirm('Are you sure you would like to restart the creation process?')){CookieService.deleteCookie('eventPlan');CookieService.deleteCookie('eventName');CookieService.deleteCookie('contactEmail');CookieService.deleteCookie('eventDT');CookieService.deleteCookie('GEP');location.href='create-event.html'}" id="nextBtn" style="font-size:1.5em;" class="btn btn-secondary mt-4" type="button">Start Over</button>
+
+  <script>
+    const nextPageName = "create-event-5.html"
+
+    document.querySelector('#nextBtn').addEventListener('click', () => {
+      CookieService.setCookie("eventDT", document.querySelector('input[type=datetime-local]').value!=''?document.querySelector('input[type=datetime-local]').value:"notSet", 1)
+      location.href="/"+nextPageName
+    })
+
+    if (CookieService.getCookie("eventDT")!=null) {location.href="/"+nextPageName}
+  </script>
+
+  <!-- Link to Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

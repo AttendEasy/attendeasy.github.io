@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Event Plan Selector</title>
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    button {
+      /*max-height: 150px;*/
+      border: 2px solid skyblue;
+      outline: none;
+      background: white;
+      border-radius: 5px;
+      margin-right: 5px;
+      font-size: 25pt;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    button:not(#cta):hover {
+      background: rgb(230, 230, 230);
+    }
+
+    button#cta:hover {
+      background: #1c85eb;
+    }
+
+    button:active {
+      border: 2px solid dodgerblue;
+    }
+
+    h2#question {
+      font-size: 30pt;
+    }
+
+    div#options {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: row;
+    }
+
+    div#result-container {
+      font-size: 1.6em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="question-container">
+    <h2 id="question"></h2>
+    <div id="options"></div>
+  </div>
+  <div id="result-container">
+    <h2 id="result"></h2>
+  </div>
+  <div style="display:none;" id="ctafield">
+    <button id="cta" style="background:dodgerblue;color:white !important;border:none !important;">Choose this
+      plan</button>
+    <br><br>
+    <button onclick="location.reload()">Start Over</button>
+  </div>
+  <script>
+    const plans = [
+      {
+        name: "Basic",
+        price: 29.99,
+        features: `QR Code Tickets
+Input your customers' names and information
+Includes 100 Free Attendees
+$5 per extra 100 Attendees`.split("\n")
+      },
+      {
+        name: "Pro",
+        price: 49.99,
+        features: `Basic Plan PLUS:
+RSVP Custom Registration Form (Link and QR Code)
+Accept Payments for Seating
+One General Admission Ticket
+No Seating Chart
+Includes 200 Free Attendees`.split("\n")
+      },
+      {
+        name: "Premium",
+        price: 99.99,
+        features: `Pro Plan PLUS:
+Seating Chart in RSVP Form
+Pricing can be changed per seat/row/section
+Includes 500 free attendees, $10 per extra 100 Attendees`.split("\n")
+      }
+    ]
+    var questions = [
+      {
+        question: "How many attendees are you expecting?",
+        options: [
+          "100, more or less",
+          "200, more or less",
+          "500, more or less"
+        ]
+      },
+      {
+        question: "How secure should your QR code tickets be?",
+        options: [
+          "Unauthorized scanning can be allowed",
+          "Simple passcode lock to scan the ticket",
+          "Only authorized devices should be able to scan the codes."
+        ]
+      },
+      {
+        question: "What's your budget?",
+        options: [
+          "Low ($30-$50)",
+          "Medium ($50-$100)",
+          "High ($100+)"
+        ]
+      },
+      {
+        question: "Would you like an online registration form?",
+        options: [
+          "No thanks, I can collect the information myself.",
+          "Yes, I need a form."
+        ],
+        type:"reg"
+      },
+      {
+        question: "Would you like QR codes to be automatically sent?",
+        options: [
+          "No thanks, I can send them out manually",
+          "Yes, I will need the sending to be automated."
+        ],
+        type:"autoqr"
+      }
+    ]
+
+    var points = {
+      basic: 0,
+      pro: 0,
+      premium: 0,
+    }
+
+    var responses = []
+
+    var qindex = 0
+
+    function showQuestion() {
+      document.getElementById("options").innerHTML = ''
+      var question = questions[qindex]
+      document.getElementById("question").innerText = question.question
+      question.options.forEach(option => {
+        var optionButton = document.createElement("button")
+        optionButton.innerText = option
+        optionButton.onclick = function () {
+          responses.push(option)
+          qindex++
+          if (qindex == questions.length) {
+            showResult()
+          } else {
+            showQuestion()
+          }
+        }
+        document.getElementById("options").appendChild(optionButton)
+      })
+    }
+
+    function showResult() {
+      var tempidx = 0
+      responses.forEach(response => {
+        var idx = questions[tempidx].options.indexOf(response)
+        if (questions[tempidx].type=="autoqr") {
+          if (idx == 0) {
+            points.basic++
+            points.pro++
+          } else if (idx == 1) {
+            points.premium++
+          }
+        } else if (questions[tempidx].type=="reg") {
+          if (idx == 0) {
+            points.basic++
+          } else if (idx == 1) {
+            points.pro++
+            points.premium++
+          }
+        } else {
+          if (idx == 0) {
+            points.basic++
+          } else if (idx == 1) {
+            points.pro++
+          } else if (idx == 2) {
+            points.premium++
+          }
+        }
+        tempidx++
+        if (tempidx == responses.length) {
+          var pointsarray = []
+          pointsarray[0] = points.basic
+          pointsarray[1] = points.pro
+          pointsarray[2] = points.premium
+          var mostpoints = Math.max(...pointsarray)
+          var bestplan = plans[pointsarray.indexOf(mostpoints)]
+          document.getElementById("question-container").style.display = 'none'
+          document.getElementById("ctafield").style.display = 'block'
+
+          document.getElementById("result-container").innerHTML = `
+          <h3>You chose the most features for the...</h3>
+          <h2>${bestplan.name} Plan</h2>
+          <p>Price: $${bestplan.price}</p>
+          <p>Features:</p>
+          <p>• ${bestplan.features.join("<br>• ")}</p>
+          `
+
+          document.getElementById("cta").onclick = function () {
+            if (location.href.endsWith("?s")) {
+              location.href = "/create-event.html?" + bestplan.name.toLowerCase()
+            } else {
+              location.href = "/register/?" + bestplan.name.toLowerCase()
+            }
+          }
+        }
+      })
+    }
+
+    showQuestion()
+  </script>
+</body>
+
+</html>

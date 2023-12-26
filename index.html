@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AttendEasy</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <a href="#">AttendEasy</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="/login/">Sign in</a></li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Log in to AttendEasy</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+          </form>
+          <div class="mt-3 mb-3 text-center">or</div>
+          <button type="button" class="btn btn-primary btn-block mb-2">Continue with Google</button>
+          <div class="text-center">
+            <a href="#">Forgot password?</a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Log in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <div id="signinmodal"
+    style="display:none;z-index:1000000000000000000000000000000000000000000000000000;width:100vw;height:100vh;position:fixed;background:rgba(0,0,0,0.4);">
+    <div
+      style="border-radius:10px;position: absolute;top:50%;left:50%;transform:translate(-50%,-61%);width:60vw;height:80vh;background:white;color:black;padding:35px;">
+      <h1>Welcome back!</h1>
+      <p style="font-size: 17pt;">Sign in below</p>
+      <button
+        style="padding:10px 20px;border:none;border-radius:5px;font-size:17pt;cursor:pointer;outline:none;color:white;background:gray;"><svg
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 20px;">
+          <path fill="white"
+            d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z">
+          </path>
+        </svg>&nbsp;&nbsp;Continue with Email</button>
+      <br><br>
+      <div>
+
+      </div>
+      <br><br>
+      <button
+        style="padding:10px 20px;border:none;border-radius:5px;font-size:17pt;cursor:pointer;outline:none;color:white;background:rgb(255,83,83);"><svg
+          style="width:20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+          <path fill="white"
+            d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
+        </svg>&nbsp;&nbsp;Continue with Google</button>
+    </div>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1>Streamline Your Check-In Experience</h1>
+      <p>Our check-in system enables you to effortlessly track attendance and enjoy a streamlined check-in process.</p>
+      <a id="getstarted" href="#pricing" class="btn btn-primary">Get Started</a>
+      <a href="javascript:alert('Demo video unavailable. Sorry about that!')"
+        class="btn btn-danger">View a Free Demo</a>
+    </div>
+    <div class="hero-animation">
+      <!-- insert animation here -->
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2>Features</h2>
+    <div style="display: flex; justify-content: center;">
+      <div class="pricing-card">
+        <h3>Easy Setup</h3>
+        <p>Just register, input your list of attendees or generate an online registration form, generate QR code tickets,
+          and send them out!</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Save Paper</h3>
+        <p>With QR code tickets, you can save paper and toner, as well as enjoy being able to easily deliver tickets via
+          email or phone.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Automate QR code sending</h3>
+        <p>With our Premium event plan, you can send QR codes with ease without manually sending each of them yourself.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Pay per Event</h3>
+        <p>No subscriptions, no one-time fees. Pay per event, for as many events as you host.</p>
+      </div>
+
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2>Pricing</h2>
+    <div style="display: flex; justify-content: center;">
+      <div class="pricing-card blue">
+        <h3>Basic</h3>
+        <p class="price">$29.99</p>
+        <ul>
+          <li>QR Code Tickets</li>
+          <li>Input your attendees' names and information</li>
+          <li>Includes 100 Free Attendees</li>
+          <li>$5 per extra 100 Attendees</li>
+        </ul>
+        <a href="/register/?basic" class="btn">Choose This Plan</a>
+      </div>
+      <div class="pricing-card orange">
+        <h3>Pro</h3>
+        <p class="price">$49.99</p>
+        <ul>
+          <li><b><em>Everything the Basic plan offers, PLUS:</em></b></li>
+          <li>RSVP Custom Registration Form (Link and QR Code)</li>
+          <li>Accept Payments for Seating</li>
+          <li>One General Admission Ticket</li>
+          <li>No Seating Chart</li>
+          <li>Includes 200 Free Attendees</li>
+        </ul>
+        <a href="/register/?pro" class="btn">Choose This Plan</a>
+      </div>
+      <div class="pricing-card green">
+        <h3>Premium</h3>
+        <p class="price">$99.99</p>
+        <ul>
+          <li><b><em>Everything the Pro plan offers, PLUS:</em></b></li>
+          <li>Seating Chart in RSVP Form</li>
+          <li>Pricing can be changed per seat/row/section</li>
+          <li>Includes 500 free attendees, $10 per extra 100 Attendees</li>
+        </ul>
+        <a href="/register/?premium" class="btn">Choose This Plan</a>
+      </div>
+    </div>
+    <span style="position:absolute;left:50%;transform:translate(-50%,0);">Can't decide? <a href="decide.html">Click
+        here</a> to compare features.</span><br>
+    <span style="position:absolute;left:50%;transform:translate(-50%,0);">Not ready to decide? <a href="register">Create an account for free</a> and decide when you're ready.</span>
+  </section>
+
+
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <h2 style="color:gray;font-size:12pt;">Don't hesitate to contact us! Any questions, concerns, problems, success stories, business inquiries, anything—we want to hear it!</h2>
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message"></textarea>
+
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+    <script>
+      var url = "https://script.google.com/macros/s/AKfycbwCgpuydU851-ALxALijTk1TyfYLBt7zWby2tS85cr4_dDLBiE0guS4GKpuQ2ImQhQc/exec";
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector('section.contact form').addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (document.querySelector('section.contact form #name').value.length==0||document.querySelector('section.contact form #message').value.length==0||/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(document.querySelector('section.contact form #email').value)==false) {
+      document.querySelector('section.contact form button').classList.remove("btn-primary")
+      document.querySelector('section.contact form button').classList.add("btn-danger")
+      document.querySelector('section.contact form button').innerText="Please enter valid email, name, and message."
+      setTimeout(function(){
+        document.querySelector('section.contact form button').classList.remove("btn-danger")
+        document.querySelector('section.contact form button').classList.add("btn-primary")
+        document.querySelector('section.contact form button').innerText="Send"
+      },3000)
+      return
+    }
+    document.querySelector('section.contact form button').disabled="true"
+    document.querySelector('section.contact form button').innerText="Loading..."
+    /*fetch(url + "?q=" + JSON.stringify([
+      "attendeasyco@gmail.com",
+      "AttendEasy Contact Ticket from " + document.querySelector('section.contact form #email').value,
+      `New Contact Form Ticket from someone named ${document.querySelector('section.contact form #name').value} (their email is ${document.querySelector('section.contact form #email').value}):\n================================================================\n${document.querySelector('section.contact form #message').value}`
+    ])).then(() => {*/
+      fetch(url + "?q=" + JSON.stringify([
+        document.querySelector('section.contact form #email').value,
+        "AttendEasy Contact Form Received",
+        `Hello ${document.querySelector('section.contact form #name').value},\nThis email is to inform you that your contact form information was received. You should get a response from us in this email thread within 1 to 7 business days. Feel free to reply with any additional details.\n\nOn ${new Date().toDateString().slice(4)}, ${document.querySelector('section.contact form #email').value} wrote:\n${document.querySelector('section.contact form #message').value}`
+      ])).then(() => {
+        alert("Your contact form ticket has been submitted successfully and you should have received a response with additional information.");
+        document.querySelector('section.contact form button').removeAttribute("disabled")
+        document.querySelector('section.contact form button').innerText="Send"
+
+        document.querySelector('section.contact form #email').value=""
+        document.querySelector('section.contact form #message').value=""
+        document.querySelector('section.contact form #name').value=""
+      });
+    //});
+  });
+});
+
+    </script>
+  </section>
+
+  <section style="display: none;" class="trusted" id="trusted">
+    <h2>Trusted by
+      <!--Multiple--> Local Businesses
+    </h2>
+    <div style="display:flex;flex-direction:row;justify-content:center;gap:3rem;">
+      <img src="white-ceo-logo.png" width="400" alt="White County CEO">
+      <!--<img src="evileyesquare.png" width="300" alt="Evil Eye Creative Studio">-->
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2023 AttendEasy. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          var href = anchor.getAttribute('href')
+          if (href.startsWith("#")) {
+            e.preventDefault()
+            var navbarHeight = document.querySelector('nav').offsetHeight
+            var targetScrollTop = document.querySelector(href).getBoundingClientRect().y + window.scrollY - navbarHeight
+            window.scrollTo({
+              top: targetScrollTop,
+              behavior: 'smooth'
+            })
+          }
+        })
+      })
+    })
+  </script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import {getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import {getDatabase, ref, get, update} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhxg-0_xuPQAJ5mmOsfgwBi1PGW-YAtZI",
+      authDomain: "attendeasy-6d661.firebaseapp.com",
+      projectId: "attendeasy-6d661",
+      storageBucket: "attendeasy-6d661.appspot.com",
+      messagingSenderId: "139379832221",
+      appId: "1:139379832221:web:a637f2b46df87146ca2b74"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase()
+    const auth = getAuth()    
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("getstarted").innerText = "Go to Dashboard"
+        document.getElementById("getstarted").href = "/dashboard"
+      }
+    })
+    
+  </script>
+</body>
+
+</html>

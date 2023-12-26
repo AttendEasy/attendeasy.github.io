@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - AttendEasy</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title mb-4">Login to Your Account</h3>
+            <form>
+              <div class="form-group"><label for="email">Email address</label><input type="email" class="form-control"
+                  id="email" aria-describedby="emailHelp" placeholder="Enter email" /></div>
+              <div class="form-group"><label for="password">Password</label><input type="password" class="form-control"
+                  id="password" placeholder="Password" /></div>
+              <div class="alert alert-danger" role="alert" style="display:none;" id="error-message">Please fix the
+                errors in the form.</div>
+              <button type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+            </form>
+            <hr />
+            <!--<p class="text-center">Or</p>
+            <button type="button" class="btn btn-outline-secondary btn-block">Sign In with Google</button>-->
+            <p class="mt-3">Don't have an account? <a href="/register/">Register</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function showError(message) {
+      $("#error-message").html(message).show();
+    }
+
+    function hideError() {
+      $("#error-message").hide();
+    }
+
+    function loginSuccess(anEmail, aPassword) {
+
+    }
+    
+    $(function () {
+      $("form").on("submit", function (e) {
+        e.preventDefault();
+        loginSuccess($("#email").val(), $("#password").val())
+      });
+    });
+  </script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import {getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendEmailVerification, signOut} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhxg-0_xuPQAJ5mmOsfgwBi1PGW-YAtZI",
+      authDomain: "attendeasy-6d661.firebaseapp.com",
+      projectId: "attendeasy-6d661",
+      storageBucket: "attendeasy-6d661.appspot.com",
+      messagingSenderId: "139379832221",
+      appId: "1:139379832221:web:a637f2b46df87146ca2b74"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    var override = false
+
+    loginSuccess = function(anEmail, aPassword) {
+      signInWithEmailAndPassword(auth, anEmail, aPassword).then((userCredential) => {
+        // Signed in, redirect to dashboard.html or payment.
+        override=true
+        location.href='/dashboard'
+      }).catch((error) => {
+        showError(error.code.split("auth/")[1].replaceAll("-", " ").charAt(0).toUpperCase() + error.code.split("auth/")[1].replaceAll("-", " ").slice(1))
+      })
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (override==false&&user) {
+        location.href='/dashboard'
+      }
+    })
+  </script>
+</body>
+
+</html>

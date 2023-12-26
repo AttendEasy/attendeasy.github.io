@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Viewer/Editor</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css">
+</head>
+
+<body>
+  <div style="width: calc(100%-10px);padding: 10px;background-color: cadetblue;color: white;text-align: center;">Confused? <a style="color:white;text-decoration:underline;" href="javascript:void(0);" onclick="introJs().start()">Take the tour!</a></div>
+  <div class="modal fade" id="addAttendee" tabindex="-1" role="dialog" aria-labelledby="addAttendeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAttendeeModalLabel">Add Attendee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="attendeeNameInput">Name of Attendee, Entity, or Ticket Holder</label>
+              <input type="text" class="form-control" id="attendeeNameInput" aria-describedby="attendeeNameHelp"
+                placeholder="Enter entity name">
+            </div>
+            <div class="form-group">
+              <label for="ticketValInput">Ticket Value</label>
+              <input type="number" class="form-control" id="ticketValInput" min="1" value="1" placeholder="Enter ticket value">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="singleAttCancel" onclick="document.querySelector('#attendeeNameInput').value='';document.querySelector('#ticketValInput').value=''" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="addAttendeeBtn" type="button" class="btn btn-primary">Add Attendee</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editAttendee" tabindex="-1" role="dialog" aria-labelledby="editAttendeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editAttendeeModalLabel">Edit Attendee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="attendeeNameInput">Name of Attendee, Entity, or Ticket Holder</label>
+              <input type="text" class="form-control" id="editattendeeNameInput" aria-describedby="editattendeeNameHelp"
+                placeholder="Enter entity name">
+            </div>
+            <div class="form-group">
+              <label for="ticketValInput">Ticket Value</label>
+              <input type="number" class="form-control" id="editticketValInput" min="1" value="1" placeholder="Enter ticket value">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="editAttCancel" onclick="document.querySelector('#editattendeeNameInput').value='';document.querySelector('#editticketValInput').value=''" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="editAttendeeBtn" type="button" class="btn btn-primary">Apply Edits</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="bulkaddAttendee" tabindex="-1" role="dialog" aria-labelledby="bulkaddAttendeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bulkaddAttendeeModalLabel">Add Attendee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="bulkattendeeNameInput">List of Names, each on their own line</label>
+              <textarea type="text" class="form-control" id="bulkattendeeNameInput" aria-describedby="bulkattendeeNameHelp"
+                placeholder="Enter entity name"></textarea>
+              <label for="bulkattendeeNameInput">List of Ticket Values, each on their own line</label>
+              <textarea type="text" class="form-control" id="bulkattendeeNameInput" aria-describedby="bulkattendeeNameHelp"
+                placeholder="Enter entity name"></textarea>
+              <p style="font-size:10pt;color:gray;">Make sure these are both in the same order and that they align. For example, the second name in the name list should have the ticket value that is the second listed in the ticket value list.</p>
+              <p style="font-size:12pt;color:#454545;">Your names list not formatted this way? <a href="/#contact" target="_blank">Contact support</a> and we'll work your list into the system!</p>
+              <p>Note to self: we need to make sure to let them put contact info, if it's Premium plan.</p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Add All Attendees</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!--<a class="navbar-brand" href="javascript:void(0);">Event Viewer/Editor</a>-->
+    <a class="navbar-brand" href="javascript:void(0);"><span id="eventNameHeader">Loading...</span><br><span id="eventPlanSmallText" style="font-size:0.75em">Loading...</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a data-intro="When you are finished, you can exit to the dashboard by pressing this button. <a href='/#contact' target='_blank'>Contact us</a> if any issues arise or you have any troubles. Good luck!" data-title="Exit" data-step="10" class="nav-link" href="/dashboard/">Back to Dashboard</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <div class="row my-4">
+      <div data-title="Event Details"  data-intro="This is the Event Details section. You can change basic event details here." data-step="1" class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Event Details
+          </div>
+          <div class="card-body">
+            <form>
+              <div  data-title="Event Name" data-intro="This is your event's name. This may be shown to attendees if you create a registration form, but it can be changed any time." data-step="2" class="form-group">
+                <label for="event-name">Name</label>
+                <input oninput="document.getElementById('eventNameHeader').innerText=this.value" type="text" class="form-control" id="event-name" placeholder="Enter event name" maxlength="50">
+              </div>
+              <div data-title="Event Date" data-intro="This is your event's date/time. This is mainly used to remind you about your event, to be shown to attendees, and to open/close accepting attendees." data-step="3" class="form-group">
+                <label for="event-date">Date and Time</label>
+                <input type="datetime-local" class="form-control" id="event-date">
+              </div>
+              <div data-title="Global Event Password" data-intro="This is your Global Event Password (GEP). This can be used to lock certain pages for security." data-step="4" class="form-group">
+                <label for="event-password">Your Global Event Password</label>
+                <p style="font-size:0.8em;color:gray;">If you would like to disable the global password, please leave this field blank.</p>
+                <input onfocus="this.type='text'" onblur="this.type='password'" type="password" class="form-control" id="event-password">
+                <!--<br>
+                <div class="form-check form-check-inline">
+                  <input type="checkbox" class="form-check-input" id="rememb-pass">
+                  <label class="form-check-label" for="rememb-pass">
+                    Remember Device on Successful Login
+                  </label>
+                </div>
+                <p style="font-size:0.8em;color:gray;">This will prevent you from needing to enter the GEP again in a device if you logged in successfully on that same device.</p>-->
+              </div>
+              <button id="saveCbtn" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Event Tickets (NOT WORKING)
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Ticket Type</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>General Admission</td>
+                  <td>FREE</td>
+                  <td>0</td>
+                  <td>
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-success">Add Ticket</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div data-disable-interaction="true" data-title="Links" data-intro="This is the Links section. You will find important buttons and links here." data-step="6" class="card">
+          <div class="card-header">
+            Links
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="event-date">Pages</label><br>
+                <a data-disable-interaction="true" data-title="Real-time Checklist" data-intro="This is your custom link to your real-time checklist. When you are doing check-in, pull up this page on a computer to make sure check-ins go through, take notes, and check attendees off manually." data-step="7" id="rtcll" class="btn btn-primary" href="#">Real-time checklist</a>
+                <a data-disable-interaction="true" data-title="QR Code Search" data-intro="This is your custom link to your QR code search. This is for once you are ready to start inviting people to your event. If you do not have the Premium plan, you must manually search attendees' names using this page and send the QR codes by hand." data-step="8" id="qrsearchl" class="btn btn-primary" href="#">QR Code Search</a>
+              </div>
+              <div class="form-group">
+                <label for="event-date">Actions</label><br>
+                <a data-disable-interaction="true" data-title="Automatic QR Code Sending" data-intro="Exclusive to our Premium event plan: Send QR codes to all or certain attendees, at the click of a button." data-step="9" onclick="if(!this.classList.contains('btn-secondary')){return}event.preventDefault();alert('Available in our Premium event plan: Automatic QR Code sending to easily invite attendees to your event. No stress, just click and done.\n\nTo send QR codes manually, use the QR code search link above to obtain attendees\' QR codes, and send them manually.')" style="cursor:not-allowed;" class="btn btn-secondary" href="#">Send QR Codes</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div data-disable-interaction="true" data-title="Attendees" data-intro="This is the Attendees section. Add or manage attendees here." data-step="5" class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Attendees
+          </div>
+          <div class="card-body">
+            <button class="btn btn-success" data-toggle="modal" data-target="#addAttendee">Add Attendee</button>
+            <button class="btn btn-success" data-toggle="modal" data-target="#bulkaddAttendee">Bulk Add</button><br><br>
+            <p>For a streamlined checklist made for check-in, visit the Real-time Checklist link in the Links section. This list should only be used for editing and deleting attendees.</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Ticket Value</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="attendeestbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import {getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import {getDatabase, ref, get, set, update, onValue, remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhxg-0_xuPQAJ5mmOsfgwBi1PGW-YAtZI",
+      authDomain: "attendeasy-6d661.firebaseapp.com",
+      projectId: "attendeasy-6d661",
+      storageBucket: "attendeasy-6d661.appspot.com",
+      messagingSenderId: "139379832221",
+      appId: "1:139379832221:web:a637f2b46df87146ca2b74"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase()
+    const auth = getAuth()
+    function makeid(length) {
+      var result = [];
+      var characters =
+          "0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result.push(
+          characters.charAt(Math.floor(Math.random() * charactersLength))
+        );
+      }
+      return result.join("");
+    }
+
+    function handle(user) {
+      document.getElementById("rtcll").href="https://rtcl.attendeasy.repl.co/?"+location.href.split("?")[1].replace("#","")
+      document.getElementById("qrsearchl").href="https://qrsearch.attendeasy.repl.co/?"+location.href.split("?")[1].replace("#","")
+      get(ref(db, "users/"+user.uid+"/events/"+location.href.split("?")[1].replace("#",""))).then((snapshot) => {
+        document.querySelector("#eventNameHeader").innerText=snapshot.val().name
+        document.querySelector("#eventPlanSmallText").innerText="Plan: "+snapshot.val().plan.charAt(0).toUpperCase() + snapshot.val().plan.slice(1)
+        document.querySelector("input#event-name").value=snapshot.val().name
+        document.querySelector("input[type=datetime-local]").value=snapshot.val().dateTime
+        document.querySelector("input#event-password").value=snapshot.val().gep
+        //document.querySelector("#rememb-pass").checked=snapshot.val().rememb
+      })
+
+      // below code can also be used for the "actions"
+      document.getElementById("saveCbtn").addEventListener('click', (e) => {
+        e.preventDefault()
+        update(ref(db, "users/"+user.uid+"/events/"+location.href.split("?")[1].replace("#","")), {
+          name: document.querySelector("input#event-name").value,
+          dateTime: document.querySelector("input[type=datetime-local]").value,
+          gep: document.querySelector("input#event-password").value
+        }).then(() => {
+          document.getElementById("saveCbtn").classList.remove("btn-primary")
+          document.getElementById("saveCbtn").classList.add("btn-success")
+          document.getElementById("saveCbtn").innerText = "Changes Saved!"
+          setTimeout(function(){
+            document.getElementById("saveCbtn").classList.remove("btn-success")
+            document.getElementById("saveCbtn").classList.add("btn-primary")
+            document.getElementById("saveCbtn").innerText = "Save Changes"
+          },1000)
+        })
+      })
+
+
+      document.getElementById("addAttendeeBtn").onclick=function(){
+        set(ref(db, "users/"+user.uid+"/events/"+location.href.split("?")[1].replace("#","")+"/people/"+makeid(10)), {
+          fullName: document.getElementById("attendeeNameInput").value,
+          ticketValue: document.getElementById("ticketValInput").value,
+          checked: false
+        }).then(() => {
+          document.getElementById("singleAttCancel").click()
+        })
+      }
+
+      onValue(ref(db, "users/"+user.uid+"/events/"+location.href.split("?")[1].replace("#","")+"/people"), (snapshot) => {
+        document.getElementById("attendeestbody").innerHTML=''
+        snapshot.forEach(person => {
+          var personElement = document.createElement("tr")
+          personElement.innerHTML=`<td>${person.val().fullName}</td>
+                <td>${person.val().ticketValue}</td>
+                <td>
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editAttendee">Edit</button>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm">Delete</button>
+                </td>`
+          personElement.children[2].children[0].onclick=function(){
+            document.getElementById("editattendeeNameInput").value=person.val().fullName
+            document.getElementById("editticketValInput").value=person.val().ticketValue
+            document.getElementById("editAttendeeBtn").onclick=function(){
+              update(ref(db, person.ref.toString().split("firebaseio.com/")[1]), {
+                fullName: document.getElementById("editattendeeNameInput").value,
+                ticketValue: document.getElementById("editticketValInput").value
+              }).then(() => {
+                document.getElementById("editAttCancel").click()
+              })
+            }
+          }
+          personElement.children[3].children[0].onclick=function(){
+            let CFDA = confirm(`Are you sure you would like to PERMANENTLY DELETE "${person.val().fullName}"? This action cannot be reversed!`)
+            if (!CFDA) return;
+            remove(ref(db, person.ref.toString().split("firebaseio.com/")[1])).then(()=>alert("Removed successfully"))
+          }
+          document.getElementById("attendeestbody").appendChild(personElement)
+        })
+      })
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        handle(user)
+      }
+    })
+    
+  </script>
+
+  <!-- Link to Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

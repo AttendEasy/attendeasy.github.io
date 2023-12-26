@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizing Event</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="/CookieService.js"></script>
+</head>
+
+<body style="width: 100%; height: 100%; background: white; position: absolute; z-index: 5; padding: 50px; top: 0px; left: 0px;">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&amp;display=swap" rel="stylesheet">
+  <h1 style="font-family: 'Merriweather', serif;">Payment successful!</h1>
+  <h5 style="font-family: 'Merriweather', serif;color:gray;width:600px;">We're finalizing your event details. Please wait...</h5>
+  <br><br><br><br><br>
+
+  <script>if (document.referrer!="https://checkout.stripe.com/") {location.href="/dashboard"}</script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import {getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhxg-0_xuPQAJ5mmOsfgwBi1PGW-YAtZI",
+      authDomain: "attendeasy-6d661.firebaseapp.com",
+      projectId: "attendeasy-6d661",
+      storageBucket: "attendeasy-6d661.appspot.com",
+      messagingSenderId: "139379832221",
+      appId: "1:139379832221:web:a637f2b46df87146ca2b74"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase()
+    const auth = getAuth()
+
+    function makeid(length) {
+      var result = [];
+      var characters =
+          "0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+          result.push(
+              characters.charAt(Math.floor(Math.random() * charactersLength))
+          );
+      }
+      return result.join("");
+    }
+
+    function handle(user) {
+      const eventID = makeid(6)
+      set(ref(db, "users/"+user.uid+"/events/"+eventID), {
+        plan:CookieService.getCookie("eventPlan"),
+        name:CookieService.getCookie("eventName"),
+        contactEmail:CookieService.getCookie("contactEmail"),
+        dateTime:CookieService.getCookie("eventDT"),
+        gep:CookieService.getCookie("GEP"),
+        rememb: false
+      }).then(() => {
+        set(ref(db, "events/"+eventID), "users;"+user.uid+";events;"+eventID).then(() => {
+          CookieService.deleteCookie("eventPlan")
+          CookieService.deleteCookie("eventName")
+          CookieService.deleteCookie("contactEmail")
+          CookieService.deleteCookie("eventDT")
+          CookieService.deleteCookie("GEP")
+          location.href="/dashboard"
+        })
+      })
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        handle(user)
+      }
+    })
+    
+  </script>
+
+  <!-- Link to Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
